@@ -1,17 +1,55 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+      <Header :quoteCount="quotes.length" :maxNum="max"/>
+      <br>
+      <QuoteCreate @send="newQuote"/>
+      <br>
+      <QuoteGrid :quotes="quotes"  @delete="deleteQuote" />
+      <br>
+      <div class="col-sm-12 text-center">
+        <div class="alert alert-primary" role="alert">
+               Click on Quote to delete it 
+        </div>
+      </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Header from './components/Header.vue'
+import QuoteCreate from './components/QuoteCreate.vue'
+import QuoteGrid from './components/QuoteGrid.vue'
+
 
 export default {
-  name: 'app',
+
+  data(){
+    return{
+          quotes:['Work smart ,not Hard'],
+          max:10
+    }
+  },
+  methods:{
+
+    newQuote(userInput){
+        if(this.quotes.length >= this.max){
+            alert("List is full.Please delete 1 Item!!!!")
+        }else{
+            this.quotes.push(userInput)
+        }
+          
+
+    },
+    deleteQuote(index){
+      this.quotes.splice(index,1)
+    }
+
+  },
+
   components: {
-    HelloWorld
+    Header,
+    QuoteCreate,
+    QuoteGrid
+   
   }
 }
 </script>
